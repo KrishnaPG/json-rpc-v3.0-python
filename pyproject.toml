@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.29.0,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fict-json-rpc"
+version = "0.1.0"
+description = "Reusable JSON-RPC 3.0 client, server, streaming, and transport primitives."
+readme = { file = "ReadMe.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "GK Palem" },
+]
+keywords = [
+    "json-rpc",
+    "jsonrpc",
+    "jsonrpc3",
+    "rpc",
+    "streaming",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.13.4,<3",
+]
+
+[project.optional-dependencies]
+fastapi = [
+    "fastapi>=0.136.1,<1",
+]
+dev = [
+    "build>=1.5.0,<2",
+    "jsonschema>=4.26.0,<5",
+    "mypy>=2.1.0,<3",
+    "pytest>=9.0.3,<10",
+    "pytest-asyncio>=1.3.0,<2",
+    "ruff>=0.15.13,<0.16",
+    "twine>=6.2.0,<7",
+]
+
+[project.urls]
+Homepage = "https://github.com/KrishnaPG/json-rpc-v3.0"
+Repository = "https://github.com/KrishnaPG/json-rpc-v3.0"
+Issues = "https://github.com/KrishnaPG/json-rpc-v3.0/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jsonrpc3"]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "LICENSE",
+    "ReadMe.md",
+    "pyproject.toml",
+    "src/jsonrpc3",
+]
