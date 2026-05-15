@@ -131,3 +131,7 @@ A new JSON-RPC server should only create a server, register methods, attach a tr
 A new JSON-RPC client should only create a client, send requests, and feed received frames back into the client runtime.
 
 Repeated parsers, dispatch loops, send locks, task registries, stream runners, cancellation handlers, or response builders belong in this package.
+
+## Authors & Contributors
+
+This was derived from the work of [GK Palem](https://gk.palem.in/) and incorporates modern RPC design patterns suitable for building large-scale LLM AI applications. Contributions were made by engineers working on distributed systems requiring advanced RPC features beyond the scope of JSON-RPC 2.0.
