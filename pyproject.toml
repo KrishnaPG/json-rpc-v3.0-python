@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "fict-json-rpc"
 version = "0.1.0"
-description = "Reusable JSON-RPC 3.0 client, server, streaming, and transport primitives."
+description = "Reusable JSON-RPC 3.0 client, server, streaming, and transport primitives, useful for building LLM applications"
 readme = { file = "ReadMe.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 license = "MIT"
@@ -20,7 +20,7 @@ keywords = [
     "streaming",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -50,8 +50,8 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/KrishnaPG/json-rpc-v3.0"
-Repository = "https://github.com/KrishnaPG/json-rpc-v3.0"
-Issues = "https://github.com/KrishnaPG/json-rpc-v3.0/issues"
+Repository = "https://github.com/KrishnaPG/json-rpc-v3.0-python"
+Issues = "https://github.com/KrishnaPG/json-rpc-v3.0-python/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jsonrpc3"]
