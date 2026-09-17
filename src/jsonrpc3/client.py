@@ -153,6 +153,20 @@ class JsonRpcClient:
             return
         tracker.set_result(payload.get("result"))
 
+    async def fail_all(self, error: BaseException) -> None:
+        """Fail every pending request and stream, e.g. on transport loss.
+
+        Transports call this from their reader loop when the connection closes
+        so in-flight callers observe the transport error instead of hanging.
+        """
+        for future in self._pending.values():
+            if not future.done():
+                future.set_exception(error)
+        self._pending.clear()
+        for tracker in self._streams.values():
+            await _fail_stream_tracker_error(tracker, error)
+        self._streams.clear()
+
     def _track_future(
         self,
         msg_id: JsonRpcId,
@@ -289,6 +303,12 @@ class JsonRpcStreamCall(AsyncIterator[object]):
         self._set_exception(JsonRpcClientError(error))
         await self._queue.put(STREAM_TERMINAL)
 
+    async def fail_with(self, error: BaseException) -> None:
+        """Complete the stream with an arbitrary transport error."""
+        if not self._result.done():
+            self._result.set_exception(error)
+        await self._queue.put(STREAM_TERMINAL)
+
     def remap(self, stream_id: JsonRpcId) -> None:
         """Move the stream to the id announced by an ACK stream extension."""
         self._stream_id = stream_id
@@ -389,3 +409,14 @@ async def _fail_stream_tracker(
         await tracker.fail(error)
         return
     tracker.set_exception(JsonRpcClientError(error))
+
+
+async def _fail_stream_tracker_error(
+    tracker: StreamTracker,
+    error: BaseException,
+) -> None:
+    if isinstance(tracker, JsonRpcStreamCall):
+        await tracker.fail_with(error)
+        return
+    if not tracker.done():
+        tracker.set_exception(error)
